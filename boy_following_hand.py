@@ -9,6 +9,7 @@ hand=load_image("hand_arrow.png")
 ch=load_image("animation_sheet.png")
 TUK_GROUND=load_image("TUK_GROUND.png")
 x,y=TUK_WIDTH//2,TUK_HEIGHT//2
+hand_x,hand_y=TUK_WIDTH//2,TUK_HEIGHT//2
 running=True
 frame=0
 direction=0
@@ -20,11 +21,18 @@ def handle_events():
             if event.key==SDLK_ESCAPE:
                 running=False
             
-
+def rand_hand():
+    global hand_x,hand_y
+    hand_x,hand_y=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT)
 while(running):
     clear_canvas()
     TUK_GROUND.draw(TUK_WIDTH//2,TUK_HEIGHT//2)
     ch.clip_draw(frame*100,direction*100,100,100,x,y)
+    hand.draw(hand_x,hand_y)
+    if x==hand_x and y==hand_y:
+        rand_hand()
+        print(hand_x,hand_y)
+    
     frame=(frame+1)%8
     handle_events()
     update_canvas()

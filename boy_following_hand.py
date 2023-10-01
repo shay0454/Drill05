@@ -22,8 +22,9 @@ def handle_events():
                 running=False
             
 def rand_hand():
-    global hand_x,hand_y
+    global hand_x,hand_y,direction,x
     hand_x,hand_y=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT)
+    direction=int(hand_x>x)
 while(running):
     clear_canvas()
     TUK_GROUND.draw(TUK_WIDTH//2,TUK_HEIGHT//2)

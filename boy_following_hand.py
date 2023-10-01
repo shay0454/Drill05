@@ -9,9 +9,10 @@ hand=load_image("hand_arrow.png")
 ch=load_image("animation_sheet.png")
 TUK_GROUND=load_image("TUK_GROUND.png")
 x,y=TUK_WIDTH//2,TUK_HEIGHT//2
+x0,y0=x,y
 hand_x,hand_y=TUK_WIDTH//2,TUK_HEIGHT//2
 running=True
-frame=0
+frame,move_count,t=0,10,0
 direction=0
 def handle_events():
     global running
@@ -22,7 +23,8 @@ def handle_events():
                 running=False
             
 def rand_hand():
-    global hand_x,hand_y,direction,x
+    global hand_x,hand_y,direction,x,y,x0,y0
+    x0,y0=hand_x,hand_y
     hand_x,hand_y=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT)
     direction=int(hand_x>x)
 while(running):
@@ -32,9 +34,13 @@ while(running):
     hand.draw(hand_x,hand_y)
     if x==hand_x and y==hand_y:
         rand_hand()
-        print(hand_x,hand_y)
-    
-    frame=(frame+1)%8
+    else:
+        per=1/move_count
+        x,y=(1-per*t)*x0+per*t*hand_x,(1-per*t)*y0+per*t*hand_y
+        t=(t+1)%(move_count+1)
+        frame=(frame+1)%8
+    print(x,y)
     handle_events()
     update_canvas()
+    delay(0.03)
 close_canvas()

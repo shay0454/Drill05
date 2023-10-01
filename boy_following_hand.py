@@ -12,7 +12,7 @@ x,y=TUK_WIDTH//2,TUK_HEIGHT//2
 x0,y0=x,y
 hand_x,hand_y=TUK_WIDTH//2,TUK_HEIGHT//2
 running=True
-frame,move_count,t=0,10,0
+frame,num_of_moves,t=0,20,0
 direction=0
 def handle_events():
     global running
@@ -26,7 +26,11 @@ def rand_hand():
     global hand_x,hand_y,direction,x,y,x0,y0
     x0,y0=hand_x,hand_y
     hand_x,hand_y=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT)
-    direction=int(hand_x>x)
+    if(hand_x>x):
+        direction=1
+    elif (hand_x<x):
+        direction=0
+
 while(running):
     clear_canvas()
     TUK_GROUND.draw(TUK_WIDTH//2,TUK_HEIGHT//2)
@@ -35,11 +39,10 @@ while(running):
     if x==hand_x and y==hand_y:
         rand_hand()
     else:
-        per=1/move_count
+        per=1/num_of_moves
         x,y=(1-per*t)*x0+per*t*hand_x,(1-per*t)*y0+per*t*hand_y
-        t=(t+1)%(move_count+1)
+        t=(t+1)%(num_of_moves+1)
         frame=(frame+1)%8
-    print(x,y)
     handle_events()
     update_canvas()
     delay(0.03)

@@ -7,10 +7,11 @@ TUK_WIDTH,TUK_HEIGHT=1280,1024
 open_canvas(TUK_WIDTH,TUK_HEIGHT)
 hand=load_image("hand_arrow.png")
 ch=load_image("animation_sheet.png")
-TUK_GOUND=load_image("TUK_GOUND.png")
+TUK_GROUND=load_image("TUK_GROUND.png")
 x,y=TUK_WIDTH//2,TUK_HEIGHT//2
 running=True
-
+frame=0
+direction=0
 def handle_events():
     global running
     events=get_events()
@@ -22,7 +23,9 @@ def handle_events():
 
 while(running):
     clear_canvas()
-    TUK_GOUND.draw(TUK_WIDTH//2,TUK_HEIGHT//2)
-
+    TUK_GROUND.draw(TUK_WIDTH//2,TUK_HEIGHT//2)
+    ch.clip_draw(frame*100,direction*100,100,100,x,y)
+    frame=(frame+1)%8
+    handle_events()
     update_canvas()
 close_canvas()
